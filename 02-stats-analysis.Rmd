@@ -1,0 +1,336 @@
+# Statistical Analysis
+
+## Deviation coding and dummy coding
+Deviation coding are conducted for Language(independent variable) and valence rating(independent variable). We also conducted dummy coding for valence categories in case that interactions are significant and needed to be decomposed to detect single effect.
+```{r}
+#Deviation coding
+ReadingData_ENandNL <- ReadingData_ENandNL %>%
+  mutate(Language_dev = if_else(Language == "Dutch", .5, -.5),
+         V_Category_NeuPos_dev = if_else(V_Category == "Positive", 2/3, -1/3),
+         V_Category_NeuNeg_dev =  if_else(V_Category == "Negative", 2/3, -1/3))
+
+#Dummy coding
+ReadingData_ENandNL <- ReadingData_ENandNL %>%
+  mutate(V_Category_NeuPos_dum = if_else(V_Category == "Positive", 1, 0),
+         V_Category_NeuNeg_dum = if_else(V_Category == "Negative", 1, 0))
+
+```
+
+
+```{r echo=FALSE}
+save(ReadingData_ENandNL,file='C:/Users/ibana/OneDrive - University of Glasgow/@Year 3/For Publication/Data and Code/final_reading_data.RData')
+```
+
+
+## Find a best-fit model
+SFD(dependent variable) is skewed, thus we decided to use glmer() to perform generalised linear mixed-effect model (GLMM).
+
+Here I left the coding for crafting models from simple to complex.
+```{r}
+#random effects (interception)
+
+#Step A simple model with Gamma model. 
+#I did not use the mean-centered variables as it gave me error message.
+#mod <- glmer(WORD_FIRST_FIXATION_DURATION ~
+#                #Main effects
+#                V_Category_NeuPos_dev + 
+#                V_Category_NeuNeg_dev + 
+#                Language_dev +
+#                #Control variables
+#                WORD_LENGTH +
+#                Conc_Mean +
+#                #Interactions
+#                V_Category_NeuPos_dev:Language_dev +  
+#                V_Category_NeuNeg_dev:Language_dev + 
+#                #Random effects
+#                (1|WORD)+ (1|PP_NR), data = ReadingData_ENandNL, family = Gamma(link="identity"))
+
+#Step B: start adding slopes
+#mod3 <- glmer(WORD_FIRST_FIXATION_DURATION~
+#                #Main effects
+#                V_Category_NeuPos_dev + 
+#                V_Category_NeuNeg_dev + 
+#                Language_dev +
+#                #Control variables
+#                WORD_LENGTH +
+#                Conc_Mean +
+#                #Interactions
+#                V_Category_NeuPos_dev:Language_dev +  
+#                V_Category_NeuNeg_dev:Language_dev + 
+#                #Random effects
+#                (1|WORD)+ (1 + Language_dev + V_Category_NeuPos_dev + V_Category_NeuNeg_dev | PP_NR), data = ReadingData_ENandNL, family=Gamma(link="identity"))
+
+#Added random slope to WORD as well as PP_NR
+#mod4 <- glmer(WORD_FIRST_FIXATION_DURATION~
+#                #Main effects
+#                V_Category_NeuPos_dev + 
+#                V_Category_NeuNeg_dev + 
+#                Language_dev +
+#                #Control variables
+#                WORD_LENGTH +
+#                Conc_Mean +
+#               #Interactions
+#                V_Category_NeuPos_dev:Language_dev +  
+#                V_Category_NeuNeg_dev:Language_dev + 
+#                #Random effects
+#                (1 + Language_dev + V_Category_NeuPos_dev + V_Category_NeuNeg_dev |WORD)+ (1 + Language_dev + V_Category_NeuPos_dev + V_Category_NeuNeg_dev | PP_NR), 
+#                data = ReadingData_ENandNL, family=Gamma(link="identity"))
+
+#Step C: Maximal model
+#mod5 <- glmer(WORD_FIRST_FIXATION_DURATION ~
+#                #Main effects
+#                V_Category_NeuPos_dev + 
+#                V_Category_NeuNeg_dev + 
+#                Language_dev +
+#                #Control variables
+#                WORD_LENGTH +
+#                Conc_Mean +
+#                #Interactions
+#                V_Category_NeuPos_dev:Language_dev +  
+#                V_Category_NeuNeg_dev:Language_dev + 
+#                #Random effects
+#                (1|WORD)+ (1+Language_dev + V_Category_NeuPos_dev +V_Category_NeuNeg_dev + Conc_Mean + WORD_LENGTH | PP_NR), 
+#                data = ReadingData_ENandNL, family=Gamma(link="identity"))
+
+```
+
+After running multiple models, I decided to go for a maxibal model which includes random slopes and intercepts for both participants and words (subjects and items). This serves as our baseline model = mod.
+```{r eval=FALSE}
+mod <- glmer(WORD_FIRST_FIXATION_DURATION ~
+             #Main effects
+             V_Category_NeuPos_dev + 
+             V_Category_NeuNeg_dev + 
+             Language_dev +
+             #Control variables
+             Conc_Mean +
+             WORD_LENGTH +
+             #Interactions
+             V_Category_NeuPos_dev:Language_dev +  
+             V_Category_NeuNeg_dev:Language_dev + 
+             #Random effects
+             (1 + Language_dev + V_Category_NeuPos_dev + V_Category_NeuNeg_dev + Conc_Mean + WORD_LENGTH | WORD)+ (1 + Language_dev + V_Category_NeuPos_dev + V_Category_NeuNeg_dev + Conc_Mean + WORD_LENGTH | PP_NR), 
+             data = ReadingData_ENandNL, family=Gamma(link="identity"), control = glmerControl(optimizer = "optimx", calc.derivs = FALSE, optCtrl = list(method = "L-BFGS-B", maxit = 10000, starttests = FALSE, kkt = FALSE)))
+
+save(mod,file='C:/Users/ibana/OneDrive - University of Glasgow/@Year 3/For Publication/Data and Code/mod_results.RData')
+```
+
+```{r echo = FALSE}
+load("mod_results.RData")
+```
+
+
+Here I also created a baseline model with original categorical variables; that is, non-deviation coded variables are used for mod2.
+```{r eval = FALSE}
+mod2 <- glmer(WORD_FIRST_FIXATION_DURATION ~
+             #Main effects
+             V_Category + 
+             Language +
+             #Control variables
+             Conc_Mean +
+             WORD_LENGTH +
+             #Interactions
+             V_Category:Language + 
+             #Random effects
+             (1 + Language + V_Category + Conc_Mean + WORD_LENGTH | WORD)+ (1 + Language + V_Category + Conc_Mean + WORD_LENGTH | PP_NR), 
+             data = ReadingData_ENandNL, family=Gamma(link="identity"), control = glmerControl(optimizer = "optimx", calc.derivs = FALSE, optCtrl = list(method = "L-BFGS-B", maxit = 10000, starttests = FALSE, kkt = FALSE)))
+
+save(mod2,file='C:/Users/ibana/OneDrive - University of Glasgow/@Year 3/For Publication/Data and Code/mod2_results.RData')
+```
+
+```{r echo = FALSE}
+load("mod2_results.RData")
+```
+
+
+I created the summary of the model for reporting.
+```{r}
+modelsummary<- broom.mixed::tidy(mod, effects = c("ran_pars", "fixed"),scales = NULL, ran_prefix = NULL, conf.int = TRUE, conf.level = 0.95, conf.method = "Wald") %>% 
+  filter(effect =="fixed")
+
+df_modelsummary <- as.data.frame(modelsummary)
+modelsummary <- data.frame(df_modelsummary$term, 
+                      round(df_modelsummary$estimate,2), 
+                      round(df_modelsummary$std.error,2), 
+                      round(df_modelsummary$statistic,2), 
+                      round(df_modelsummary$p.value,2), 
+                      round(df_modelsummary$conf.low,2), 
+                      round(df_modelsummary$conf.high,2))
+names(modelsummary) <- (c("Term", "Estimate", "Standard Error", "t-value", "p-value", "95% CI (Lower)", "95% CI (Higher)"))
+modelsummary$`p-value` <- ifelse(modelsummary$`p-value` <0.001, "<0.001", round(modelsummary$`p-value`, 3))
+
+kable(modelsummary) %>% kable_styling()
+```
+
+## Run model comparison for the main effect and interactions
+First of all, I created reduced models (mod3, mod4, mod5) by removing main effect of valence, language, and interaction from the baseline model, respectively.
+```{r eval=FALSE}
+#Removing main effect of valence from mod
+mod3 <- update(mod, . ~ . - V_Category_NeuPos_dev - V_Category_NeuNeg_dev)
+
+#Removing main effect of language from mod
+mod4 <- update(mod, . ~ . - Language_dev)
+
+#Removing interaction from mod
+mod5 <- update(mod, . ~ . - V_Category_NeuPos_dev:Language_dev - V_Category_NeuNeg_dev:Language_dev)
+
+
+save(mod3,file='C:/Users/ibana/OneDrive - University of Glasgow/@Year 3/For Publication/Data and Code/mod3_results.RData')
+save(mod4,file='C:/Users/ibana/OneDrive - University of Glasgow/@Year 3/For Publication/Data and Code/mod4_results.RData')
+save(mod5,file='C:/Users/ibana/OneDrive - University of Glasgow/@Year 3/For Publication/Data and Code/mod5_results.RData')
+```
+
+```{r echo = FALSE}
+load("mod3_results.RData")
+load("mod4_results.RData")
+load("mod5_results.RData")
+```
+
+
+Then I ran model comparison. Model comparison was conducted with ANOVA.
+```{r}
+mod_mod3 <- anova(mod, mod3) #baseline model vs reduced wo valence effect
+mod_mod4 <- anova(mod, mod4) #baseline model vs reduced wo language
+mod_mod5 <- anova(mod, mod5) #baseline model vs reduced wo val x lang interaction
+```
+The likelihood ratio test confirmed that the effect of valence was also significant ($\chi^{2}$(2) = 6.81, *p* = .03).
+```{r}
+kable(mod_mod3) %>% kable_styling
+```
+
+The main effect of language is also significant ($\chi^{2}$(1) = 25.44, *p* < .001).
+```{r}
+kable(mod_mod4) %>% kable_styling
+```
+
+Valence x language interaction was not statistically significant ($\chi^{2}$(2) = 3.40, *p* = .18).
+```{r}
+kable(mod_mod5) %>% kable_styling
+```
+
+
+## Decompose the significant effects of valence
+The significant main effect of valence is decomposed with emmeans() function. I used revpairwise to reverse the direction of comparison for easier reporting.
+```{r, message=FALSE}
+Posthoc_V_NeuPos <- emmeans(mod, list(revpairwise ~ V_Category_NeuPos_dev), adjust = "tukey")
+Posthoc_V_NeuNeg <- emmeans(mod, list(revpairwise ~ V_Category_NeuNeg_dev), adjust = "tukey")
+```
+Here, 0.66 refers to Positive, -0.33 refers to Neutral.
+```{r}
+Posthoc_V_NeuPos
+
+confint(Posthoc_V_NeuPos)
+```
+Thus you can interpret the table as:
+
+Value           |estimate|SE  |df |z.ratio|p.value|asymp.LCL|asymp.UCL
+----------------|--------|----|---|-------|-------|---------|---------
+Positive-Neutral|   -5.44|1.41|Inf| -3.852| 0.0001|    -8.21|    -2.67
+
+Here, 0.66 refers to Negative, -0.33 refers to Neutral.
+```{r}
+Posthoc_V_NeuNeg
+
+confint(Posthoc_V_NeuNeg)
+```
+Thus you can interpret the table as:
+
+Value           |estimate|SE  |df |z.ratio|p.value|asymp.LCL|asymp.UCL
+----------------|--------|----|---|-------|-------|---------|---------
+Negative-Neutral|  -0.263|1.71|Inf| -0.154| 0.8780|    -3.62|      3.1
+
+## Expolatory analysis: compare positive vs negative
+```{r  eval = FALSE}
+ReadingData_ENandNL_PosNeg <- ReadingData_ENandNL %>%
+  select(-V_Category_NeuPos_dev, - V_Category_NeuNeg_dev) %>%
+  mutate(V_Category_PosNeu_dev = if_else(V_Category == "Neutral", 2/3, -1/3),
+         V_Category_PosNeg_dev = if_else(V_Category == "Negative", 2/3, -1/3))
+
+mod6 <- glmer(WORD_FIRST_FIXATION_DURATION ~
+              #Main effects
+              V_Category_PosNeu_dev + 
+              V_Category_PosNeg_dev + 
+              Language_dev +
+              #Control variables
+              Conc_Mean +
+              WORD_LENGTH +
+              #Interactions
+              V_Category_PosNeu_dev:Language_dev + 
+              V_Category_PosNeg_dev:Language_dev + 
+              #Random effects
+              (1 + Language_dev + V_Category_PosNeu_dev + V_Category_PosNeg_dev + Conc_Mean + WORD_LENGTH | WORD)+ (1 + Language_dev + V_Category_PosNeu_dev + V_Category_PosNeg_dev + Conc_Mean + WORD_LENGTH | PP_NR), 
+              data = ReadingData_ENandNL_PosNeg, family=Gamma(link="identity"), control = glmerControl(optimizer = "optimx", calc.derivs = FALSE, optCtrl = list(method = "L-BFGS-B", maxit = 10000, starttests = FALSE, kkt = FALSE)))
+
+save(mod6,file='C:/Users/ibana/OneDrive - University of Glasgow/@Year 3/For Publication/Data and Code/mod6_results.RData')
+```
+
+```{r eval=FALSE, echo=FALSE}
+#Reduced model for main effects
+mod10 <- update(mod6, . ~ . - V_Category_PosNeu_dev - V_Category_PosNeg_dev)
+save(mod10,file='C:/Users/ibana/OneDrive - University of Glasgow/@Year 3/For Publication/Data and Code/mod10_results.RData')
+
+#Reduced emodel for interaction
+mod11 <- update(mod6, ~ . - V_Category_PosNeu_dev:Language_dev - V_Category_PosNeg_dev:Language_dev)
+save(mod11,file='C:/Users/ibana/OneDrive - University of Glasgow/@Year 3/For Publication/Data and Code/mod11_results.RData')
+```
+
+```{r echo=FALSE}
+load("mod6_results.RData")
+```
+
+The effect of valence is decomposed with emmeans().
+```{r message=FALSE}
+Posthoc_V_PosNeg <- emmeans(mod6, list(pairwise ~ V_Category_PosNeg_dev), adjust = "tukey")
+
+Posthoc_V_PosNeg
+
+confint(Posthoc_V_PosNeg)
+```
+Here -0.33 refers to Positive and 0.66 refers to Negative.
+Thus you can interpret the table as:
+
+Value            |estimate|SE  |df |z.ratio|p.value|asymp.LCL|asymp.UCL
+-----------------|--------|----|---|-------|-------|---------|---------
+Positive-Negative|   -5.29|2.01|Inf| -2.631| 0.0085|    -9.23|    -1.35
+
+## Decompose the non-significant effect of interaction
+The model comparison did not provide significant results for interaction of Valence x Language, but mod showed V_Category_NeuPos_dev:Language_dev was significant. Decomposing the results here to look into it deeply.
+```{r}
+Posthoc_Int_NeuPosLang <- emmeans(mod, list(revpairwise ~ V_Category_NeuPos_dev:Language_dev), adjust = "tukey" )
+Posthoc_Int_NeuNegLang <- emmeans(mod, list(revpairwise ~ V_Category_NeuNeg_dev:Language_dev), adjust = "tukey" )
+Posthoc_Int_PosNegLang <- emmeans(mod6, list(pairwise ~ V_Category_PosNeg_dev:Language_dev), adjust = "tukey" )
+```
+
+The Language_dev -0.5 refers to English, 0.5 refers to English. To decompose the non-significant interaction of valence x language, we only look at the pairwise difference with same languages, which are on the top and bottom rows.
+```{r}
+Posthoc_Int_NeuPosLang
+confint(Posthoc_Int_NeuPosLang)
+```
+
+In the above table, 0.66 refers to Positive, 0.33 refers to Neutral. As we only focus on the top and bottom rows of the data, we extract these results:
+
+Language|Interaction     |estimate|SE  |df |z.ratio|p.value|asymp.LCL|asymp.UCL
+--------|----------------|--------|----|---|-------|-------|---------|---------
+English |Positive-Neutral|   -8.52|1.78|Inf| -4.778| <.0001|   -13.11|    -3.94
+Dutch   |Positive-Neutral|   -2.36|2.03|Inf| -1.159| 0.6526|    -7.58|     2.87
+
+We will do the same for the other two tables.
+
+```{r}
+Posthoc_Int_NeuNegLang
+confint(Posthoc_Int_NeuNegLang)
+```
+
+Language|Interaction     |estimate|SE  |df |z.ratio|p.value|asymp.LCL|asymp.UCL
+--------|----------------|--------|----|---|-------|-------|---------|---------
+English |Negative-Neutral|  -0.393|2.34|Inf| -0.168| 0.9983|    -6.40|     5.62
+Dutch   |Negative-Neutral|  -0.133|2.33|Inf| -0.057| 0.9999|    -6.13|     5.86
+
+```{r}
+Posthoc_Int_PosNegLang
+confint(Posthoc_Int_PosNegLang)
+```
+
+Language|Interaction      |estimate|SE  |df |z.ratio|p.value|asymp.LCL|asymp.UCL
+--------|-----------------|--------|----|---|-------|-------|---------|---------
+English |Positive-Negative|   -8.31|2.63|Inf| -3.156| 0.0087|    -15.1|    -1.55
+Dutch   |Positive-Negative|   -2.27|2.74|Inf| -0.830| 0.8403|     -9.3|     4.76

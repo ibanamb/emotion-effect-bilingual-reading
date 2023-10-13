@@ -1,0 +1,31 @@
+--- 
+title: "Dana analysis script"
+author: "Ibana Matsuo"
+date: "`r Sys.Date()`"
+site: bookdown::bookdown_site
+documentclass: book
+bibliography: [book.bib, packages.bib]
+csl: apa.csl
+# url: your book url like https://bookdown.org/yihui/bookdown
+# cover-image: path to the social sharing image like images/cover.jpg
+description: |
+  This book consits of the R script I used to conduct data clearning, wrangling, visualisation and statistical analysis for my MSc Dissertation project at the University of Glasgow.
+link-citations: yes
+github-repo: imatsuo/emotion-effect-bilingual-reading
+---
+
+# Overview
+
+This webpage consists of the R script I used to conduct data cleaning, wrangling, visualisation, and statistical analysis for my MSc Dissertation project at the University of Glasgow.
+
+**Dissertation Title:** The Emotion Effect in First- and Second- Language Book Reading: Emotional Disembodiment or Attentional Advantage?
+
+**Abstract**  
+Bilinguals’ emotion processing has emerged as an exciting area of research given the ubiquitous nature of bilingualism and the importance of language in emotion processing. Despite a growing consensus that written words are processed differently depending on their emotional valence, existing research on emotion and lexical processing has mostly been conducted with a single-word experimental paradigm. The present study analysed data from a bilingual corpus of eye movements while reading a novel to investigate processing differences among three valence categories (positive/negative/neutral) and between bilinguals’ L1 and L2 (Dutch/English). We found no processing differences among the valence categories in L1, which is contrary to the previous studies. Interestingly, the only processing advantage we found was in L2 positive words over neutral words. These findings suggest that valence may not exert a processing advantage when bilinguals read in L1, and that the disembodiment account of L2   may not explain the processing patterns in L2. The implications of these findings are discussed with a model of emotion and attentional resources and the emotionality of global narrative contexts, instead of individual words. 
+
+```{r include=FALSE}
+# automatically create a bib database for R packages
+knitr::write_bib(c(
+  .packages(), 'bookdown', 'knitr', 'rmarkdown'
+), 'packages.bib')
+```
