@@ -1,5 +1,5 @@
 --- 
-title: "Dana analysis script"
+title: "Data analysis script"
 author: "Ibana Matsuo"
 date: "`r Sys.Date()`"
 site: bookdown::bookdown_site
