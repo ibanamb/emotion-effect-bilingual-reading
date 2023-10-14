@@ -393,7 +393,7 @@ wordsummary <- data.frame(df_Sum_WordList$Language,
                           round(df_Sum_WordList$SD_KnownRatio,3))
 names(wordsummary) <- (c("Language", "Valence Category", "N", "Valence rating (Mean)", "Valence rating (SD)", "Word Length (Mean)", "Word Length (SD)", "Concreteness rating (Mean)", "Concreteness rating (SD)", "Word known ratio (Mean)", "Word known ratio (SD)"))
 
-kable(wordsummary) %>% kable_styling()
+kable(wordsummary) %>% kable_styling() %>% scroll_box(width = "100%", height = "200px")
 ```
 
 ## Visualisation of target word lists
@@ -776,7 +776,7 @@ ReadingDataSummary <- data.frame(df_Sum_ReadingData$Language,
                           round(df_Sum_ReadingData$SD_KnownRatio,3))
 names(ReadingDataSummary) <- (c("Language", "Valence Category", "N", "Valence rating (Mean)", "Valence rating (SD)", "Word Length (Mean)", "Word Length (SD)", "Concreteness rating (Mean)", "Concreteness rating (SD)", "Word known ratio (Mean)", "Word known ratio (SD)"))
 
-kable(ReadingDataSummary) %>% kable_styling()
+kable(ReadingDataSummary) %>% kable_styling() %>% scroll_box(width = "100%", height = "200px")
 ```
 
 Here I also summarised the number of items per participant per language.
