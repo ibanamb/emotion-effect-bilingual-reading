@@ -1,0 +1,384 @@
+<!DOCTYPE html>
+<html lang="" xml:lang="">
+<head>
+
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <title>Chapter 4 Visualisation | Dana analysis script</title>
+  <meta name="description" content="This book consits of the R script I used to conduct data clearning, wrangling, visualisation and statistical analysis for my MSc Dissertation project at the University of Glasgow." />
+  <meta name="generator" content="bookdown 0.35 and GitBook 2.6.7" />
+
+  <meta property="og:title" content="Chapter 4 Visualisation | Dana analysis script" />
+  <meta property="og:type" content="book" />
+  
+  <meta property="og:description" content="This book consits of the R script I used to conduct data clearning, wrangling, visualisation and statistical analysis for my MSc Dissertation project at the University of Glasgow." />
+  <meta name="github-repo" content="imatsuo/emotion-effect-bilingual-reading" />
+
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:title" content="Chapter 4 Visualisation | Dana analysis script" />
+  
+  <meta name="twitter:description" content="This book consits of the R script I used to conduct data clearning, wrangling, visualisation and statistical analysis for my MSc Dissertation project at the University of Glasgow." />
+  
+
+<meta name="author" content="Ibana Matsuo" />
+
+
+<meta name="date" content="2023-10-14" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+  
+  
+<link rel="prev" href="statistical-analysis.html"/>
+<link rel="next" href="references.html"/>
+<script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/fuse.js@6.4.6/dist/fuse.min.js"></script>
+<link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-highlight.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-search.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-fontsettings.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-clipboard.css" rel="stylesheet" />
+
+
+
+
+
+
+
+
+<link href="libs/anchor-sections-1.1.0/anchor-sections.css" rel="stylesheet" />
+<link href="libs/anchor-sections-1.1.0/anchor-sections-hash.css" rel="stylesheet" />
+<script src="libs/anchor-sections-1.1.0/anchor-sections.js"></script>
+<script src="libs/kePrint-0.0.1/kePrint.js"></script>
+<link href="libs/lightable-0.0.1/lightable.css" rel="stylesheet" />
+
+
+<style type="text/css">
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { color: #008000; } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { color: #008000; font-weight: bold; } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+</style>
+
+<style type="text/css">
+  
+  div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+</style>
+<style type="text/css">
+/* Used with Pandoc 2.11+ new --citeproc when CSL is used */
+div.csl-bib-body { }
+div.csl-entry {
+  clear: both;
+}
+.hanging div.csl-entry {
+  margin-left:2em;
+  text-indent:-2em;
+}
+div.csl-left-margin {
+  min-width:2em;
+  float:left;
+}
+div.csl-right-inline {
+  margin-left:2em;
+  padding-left:1em;
+}
+div.csl-indent {
+  margin-left: 2em;
+}
+</style>
+
+<link rel="stylesheet" href="style.css" type="text/css" />
+</head>
+
+<body>
+
+
+
+  <div class="book without-animation with-summary font-size-2 font-family-1" data-basepath=".">
+
+    <div class="book-summary">
+      <nav role="navigation">
+
+<ul class="summary">
+<li><a href="./">Data analysis script</a></li>
+
+<li class="divider"></li>
+<li class="chapter" data-level="1" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i><b>1</b> Overview</a></li>
+<li class="chapter" data-level="2" data-path="set-up-and-data-preparation.html"><a href="set-up-and-data-preparation.html"><i class="fa fa-check"></i><b>2</b> Set-up and Data preparation</a>
+<ul>
+<li class="chapter" data-level="2.1" data-path="set-up-and-data-preparation.html"><a href="set-up-and-data-preparation.html#load-libraries"><i class="fa fa-check"></i><b>2.1</b> Load libraries</a></li>
+<li class="chapter" data-level="2.2" data-path="set-up-and-data-preparation.html"><a href="set-up-and-data-preparation.html#prepare-geco-material"><i class="fa fa-check"></i><b>2.2</b> Prepare GECO Material</a></li>
+<li class="chapter" data-level="2.3" data-path="set-up-and-data-preparation.html"><a href="set-up-and-data-preparation.html#prepare-valence-dataset"><i class="fa fa-check"></i><b>2.3</b> Prepare Valence dataset</a></li>
+<li class="chapter" data-level="2.4" data-path="set-up-and-data-preparation.html"><a href="set-up-and-data-preparation.html#prepare-concreteness-rating"><i class="fa fa-check"></i><b>2.4</b> Prepare concreteness rating</a></li>
+<li class="chapter" data-level="2.5" data-path="set-up-and-data-preparation.html"><a href="set-up-and-data-preparation.html#prepare-list-of-identical-cognates"><i class="fa fa-check"></i><b>2.5</b> Prepare list of Identical cognates</a></li>
+<li class="chapter" data-level="2.6" data-path="set-up-and-data-preparation.html"><a href="set-up-and-data-preparation.html#combine-prepared-datasets-to-create-target-word-lists"><i class="fa fa-check"></i><b>2.6</b> Combine prepared datasets to create target word lists</a></li>
+<li class="chapter" data-level="2.7" data-path="set-up-and-data-preparation.html"><a href="set-up-and-data-preparation.html#categorise-target-words-and-remove-unknown-words"><i class="fa fa-check"></i><b>2.7</b> Categorise target words and remove unknown words</a></li>
+<li class="chapter" data-level="2.8" data-path="set-up-and-data-preparation.html"><a href="set-up-and-data-preparation.html#create-summary-tables-for-wordlists"><i class="fa fa-check"></i><b>2.8</b> Create summary tables for WordLists</a></li>
+<li class="chapter" data-level="2.9" data-path="set-up-and-data-preparation.html"><a href="set-up-and-data-preparation.html#visualisation-of-target-word-lists"><i class="fa fa-check"></i><b>2.9</b> Visualisation of target word lists</a></li>
+<li class="chapter" data-level="2.10" data-path="set-up-and-data-preparation.html"><a href="set-up-and-data-preparation.html#demographic-information"><i class="fa fa-check"></i><b>2.10</b> Demographic information</a></li>
+<li class="chapter" data-level="2.11" data-path="set-up-and-data-preparation.html"><a href="set-up-and-data-preparation.html#data-wrangling-on-readingdata"><i class="fa fa-check"></i><b>2.11</b> Data wrangling on ReadingData</a></li>
+<li class="chapter" data-level="2.12" data-path="set-up-and-data-preparation.html"><a href="set-up-and-data-preparation.html#join-readingdata-and-target-word-lists"><i class="fa fa-check"></i><b>2.12</b> Join ReadingData and Target Word Lists</a></li>
+<li class="chapter" data-level="2.13" data-path="set-up-and-data-preparation.html"><a href="set-up-and-data-preparation.html#detect-outliers"><i class="fa fa-check"></i><b>2.13</b> Detect outliers</a></li>
+<li class="chapter" data-level="2.14" data-path="set-up-and-data-preparation.html"><a href="set-up-and-data-preparation.html#account-for-the-repeated-words-in-the-datasets"><i class="fa fa-check"></i><b>2.14</b> Account for the repeated words in the datasets</a></li>
+<li class="chapter" data-level="2.15" data-path="set-up-and-data-preparation.html"><a href="set-up-and-data-preparation.html#clean-up-repeating-words-in-readingdata"><i class="fa fa-check"></i><b>2.15</b> Clean up repeating words in ReadingData</a></li>
+<li class="chapter" data-level="2.16" data-path="set-up-and-data-preparation.html"><a href="set-up-and-data-preparation.html#summary-of-words-for-analysis"><i class="fa fa-check"></i><b>2.16</b> Summary of words for analysis</a></li>
+<li class="chapter" data-level="2.17" data-path="set-up-and-data-preparation.html"><a href="set-up-and-data-preparation.html#mean-centering"><i class="fa fa-check"></i><b>2.17</b> Mean centering</a></li>
+<li class="chapter" data-level="2.18" data-path="set-up-and-data-preparation.html"><a href="set-up-and-data-preparation.html#summary-of-sfd"><i class="fa fa-check"></i><b>2.18</b> Summary of SFD</a></li>
+</ul></li>
+<li class="chapter" data-level="3" data-path="statistical-analysis.html"><a href="statistical-analysis.html"><i class="fa fa-check"></i><b>3</b> Statistical Analysis</a>
+<ul>
+<li class="chapter" data-level="3.1" data-path="statistical-analysis.html"><a href="statistical-analysis.html#deviation-coding-and-dummy-coding"><i class="fa fa-check"></i><b>3.1</b> Deviation coding and dummy coding</a></li>
+<li class="chapter" data-level="3.2" data-path="statistical-analysis.html"><a href="statistical-analysis.html#find-a-best-fit-model"><i class="fa fa-check"></i><b>3.2</b> Find a best-fit model</a></li>
+<li class="chapter" data-level="3.3" data-path="statistical-analysis.html"><a href="statistical-analysis.html#run-model-comparison-for-the-main-effect-and-interactions"><i class="fa fa-check"></i><b>3.3</b> Run model comparison for the main effect and interactions</a></li>
+<li class="chapter" data-level="3.4" data-path="statistical-analysis.html"><a href="statistical-analysis.html#decompose-the-significant-effects-of-valence"><i class="fa fa-check"></i><b>3.4</b> Decompose the significant effects of valence</a></li>
+<li class="chapter" data-level="3.5" data-path="statistical-analysis.html"><a href="statistical-analysis.html#expolatory-analysis-compare-positive-vs-negative"><i class="fa fa-check"></i><b>3.5</b> Expolatory analysis: compare positive vs negative</a></li>
+<li class="chapter" data-level="3.6" data-path="statistical-analysis.html"><a href="statistical-analysis.html#decompose-the-non-significant-effect-of-interaction"><i class="fa fa-check"></i><b>3.6</b> Decompose the non-significant effect of interaction</a></li>
+</ul></li>
+<li class="chapter" data-level="4" data-path="visualisation.html"><a href="visualisation.html"><i class="fa fa-check"></i><b>4</b> Visualisation</a>
+<ul>
+<li class="chapter" data-level="4.1" data-path="visualisation.html"><a href="visualisation.html#the-final-reading-dataset"><i class="fa fa-check"></i><b>4.1</b> The final reading dataset</a></li>
+<li class="chapter" data-level="4.2" data-path="visualisation.html"><a href="visualisation.html#the-baseline-model-mod"><i class="fa fa-check"></i><b>4.2</b> The baseline model (mod)</a></li>
+<li class="chapter" data-level="4.3" data-path="visualisation.html"><a href="visualisation.html#emmip-interaction-style-plots-for-estimated-marginal-means"><i class="fa fa-check"></i><b>4.3</b> emmip: Interaction-style plots for estimated marginal means</a></li>
+<li class="chapter" data-level="4.4" data-path="visualisation.html"><a href="visualisation.html#assumption-checking"><i class="fa fa-check"></i><b>4.4</b> Assumption Checking</a></li>
+</ul></li>
+<li class="chapter" data-level="" data-path="references.html"><a href="references.html"><i class="fa fa-check"></i>References</a></li>
+<li class="divider"></li>
+<li><a href="https://github.com/rstudio/bookdown" target="blank">Published with bookdown</a></li>
+
+</ul>
+
+      </nav>
+    </div>
+
+    <div class="book-body">
+      <div class="body-inner">
+        <div class="book-header" role="navigation">
+          <h1>
+            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./">Dana analysis script</a>
+          </h1>
+        </div>
+
+        <div class="page-wrapper" tabindex="-1" role="main">
+          <div class="page-inner">
+
+            <section class="normal" id="section-">
+<div id="visualisation" class="section level1 hasAnchor" number="4">
+<h1><span class="header-section-number">Chapter 4</span> Visualisation<a href="visualisation.html#visualisation" class="anchor-section" aria-label="Anchor link to header"></a></h1>
+<div id="the-final-reading-dataset" class="section level2 hasAnchor" number="4.1">
+<h2><span class="header-section-number">4.1</span> The final reading dataset<a href="visualisation.html#the-final-reading-dataset" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>A violin-box plot is created for the final reading dataset for analysis.</p>
+<div class="sourceCode" id="cb90"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb90-1"><a href="visualisation.html#cb90-1" tabindex="-1"></a><span class="fu">ggplot</span>(ReadingData_ENandNL, <span class="fu">aes</span>(<span class="at">x =</span> V_Category, <span class="at">y =</span> WORD_FIRST_FIXATION_DURATION, <span class="at">fill =</span> V_Category)) <span class="sc">+</span></span>
+<span id="cb90-2"><a href="visualisation.html#cb90-2" tabindex="-1"></a>  <span class="fu">geom_violin</span>(<span class="at">alpha =</span> .<span class="dv">6</span>) <span class="sc">+</span></span>
+<span id="cb90-3"><a href="visualisation.html#cb90-3" tabindex="-1"></a>  <span class="fu">geom_boxplot</span>(<span class="at">width =</span> .<span class="dv">2</span>, <span class="at">alpha =</span> .<span class="dv">6</span>) <span class="sc">+</span></span>
+<span id="cb90-4"><a href="visualisation.html#cb90-4" tabindex="-1"></a>  <span class="fu">stat_summary</span>(<span class="at">fun =</span> <span class="st">&quot;mean&quot;</span>, <span class="at">geom =</span> <span class="st">&quot;point&quot;</span>,</span>
+<span id="cb90-5"><a href="visualisation.html#cb90-5" tabindex="-1"></a>               <span class="at">position =</span> <span class="fu">position_dodge</span>(.<span class="dv">9</span>)) <span class="sc">+</span></span>
+<span id="cb90-6"><a href="visualisation.html#cb90-6" tabindex="-1"></a>  <span class="fu">stat_summary</span>(<span class="at">fun.data =</span> <span class="st">&quot;mean_se&quot;</span>, <span class="at">geom =</span> <span class="st">&quot;errorbar&quot;</span>, <span class="at">width =</span> .<span class="dv">1</span>,</span>
+<span id="cb90-7"><a href="visualisation.html#cb90-7" tabindex="-1"></a>               <span class="at">position =</span> <span class="fu">position_dodge</span>(.<span class="dv">9</span>))<span class="sc">+</span></span>
+<span id="cb90-8"><a href="visualisation.html#cb90-8" tabindex="-1"></a>  <span class="fu">scale_x_discrete</span>(<span class="at">name =</span> <span class="st">&quot;Valence Category&quot;</span>) <span class="sc">+</span></span>
+<span id="cb90-9"><a href="visualisation.html#cb90-9" tabindex="-1"></a>  <span class="fu">scale_y_continuous</span>(<span class="at">name =</span> <span class="st">&quot;Single Fixation Duration (ms)&quot;</span>) <span class="sc">+</span></span>
+<span id="cb90-10"><a href="visualisation.html#cb90-10" tabindex="-1"></a>  <span class="fu">scale_fill_viridis_d</span>(<span class="at">option =</span> <span class="st">&quot;E&quot;</span>) <span class="sc">+</span> </span>
+<span id="cb90-11"><a href="visualisation.html#cb90-11" tabindex="-1"></a>  <span class="fu">facet_wrap</span>(<span class="sc">~</span>Language) <span class="sc">+</span></span>
+<span id="cb90-12"><a href="visualisation.html#cb90-12" tabindex="-1"></a>  <span class="fu">theme_bw</span>() <span class="sc">+</span></span>
+<span id="cb90-13"><a href="visualisation.html#cb90-13" tabindex="-1"></a>  <span class="fu">guides</span>(<span class="at">fill =</span> <span class="cn">FALSE</span>)</span></code></pre></div>
+<p><img src="_main_files/figure-html/unnamed-chunk-76-1.png" width="672" /></p>
+</div>
+<div id="the-baseline-model-mod" class="section level2 hasAnchor" number="4.2">
+<h2><span class="header-section-number">4.2</span> The baseline model (mod)<a href="visualisation.html#the-baseline-model-mod" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>I created a Blobbogram for Generalised linear mixed-effect model.broom.mixed::tidy() works on LMM to create a model summary. I then added factor to split the data for colours.</p>
+<div class="sourceCode" id="cb91"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb91-1"><a href="visualisation.html#cb91-1" tabindex="-1"></a>modelsummary_vis <span class="ot">&lt;-</span> broom.mixed<span class="sc">::</span><span class="fu">tidy</span>(mod, <span class="at">effects =</span> <span class="fu">c</span>(<span class="st">&quot;ran_pars&quot;</span>, <span class="st">&quot;fixed&quot;</span>),<span class="at">scales =</span> <span class="cn">NULL</span>, <span class="at">ran_prefix =</span> <span class="cn">NULL</span>, <span class="at">conf.int =</span> <span class="cn">TRUE</span>, <span class="at">conf.level =</span> <span class="fl">0.95</span>, <span class="at">conf.method =</span> <span class="st">&quot;Wald&quot;</span>) <span class="sc">%&gt;%</span> </span>
+<span id="cb91-2"><a href="visualisation.html#cb91-2" tabindex="-1"></a>  <span class="fu">filter</span>(effect <span class="sc">==</span><span class="st">&quot;fixed&quot;</span>) <span class="sc">%&gt;%</span> <span class="fu">filter</span>(term<span class="sc">!=</span><span class="st">&quot;(Intercept)&quot;</span>)</span>
+<span id="cb91-3"><a href="visualisation.html#cb91-3" tabindex="-1"></a></span>
+<span id="cb91-4"><a href="visualisation.html#cb91-4" tabindex="-1"></a><span class="co">#Add factor to split the data for colours</span></span>
+<span id="cb91-5"><a href="visualisation.html#cb91-5" tabindex="-1"></a>modelsummary_vis<span class="sc">$</span>Type <span class="ot">&lt;-</span> <span class="fu">as.factor</span>(<span class="fu">ifelse</span>(<span class="fu">str_detect</span>(modelsummary_vis<span class="sc">$</span>term, <span class="st">&quot;:&quot;</span>), <span class="st">&quot;Interaction&quot;</span>, <span class="st">&quot;Main effect&quot;</span>))</span></code></pre></div>
+<p>Below ggplot() coding was run to generate a Blobbogram. Condition1 refers to Positive vs Neutral; Condition2 refers to Negative vs Neutral. The minimal theme is applied to make it black &amp; white = colourblind friendly.</p>
+<div class="sourceCode" id="cb92"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb92-1"><a href="visualisation.html#cb92-1" tabindex="-1"></a><span class="fu">ggplot</span>(modelsummary_vis, <span class="fu">aes</span>(<span class="at">x =</span> term, <span class="at">y =</span> estimate, <span class="at">ymin =</span> conf.low, <span class="at">ymax =</span> conf.high, <span class="at">shape =</span> Type)) <span class="sc">+</span> </span>
+<span id="cb92-2"><a href="visualisation.html#cb92-2" tabindex="-1"></a>  <span class="fu">geom_pointrange</span>() <span class="sc">+</span></span>
+<span id="cb92-3"><a href="visualisation.html#cb92-3" tabindex="-1"></a>  <span class="fu">ylab</span>(<span class="st">&quot;Estimates with 95% CIs&quot;</span>) <span class="sc">+</span> </span>
+<span id="cb92-4"><a href="visualisation.html#cb92-4" tabindex="-1"></a>  <span class="fu">geom_hline</span>(<span class="fu">aes</span>(<span class="at">yintercept =</span> <span class="dv">0</span>), <span class="at">linetype =</span> <span class="st">&quot;dashed&quot;</span>) <span class="sc">+</span></span>
+<span id="cb92-5"><a href="visualisation.html#cb92-5" tabindex="-1"></a>  <span class="fu">scale_x_discrete</span>(<span class="at">limits =</span> <span class="fu">c</span>(<span class="st">&quot;V_Category_NeuNeg_dev:Language_dev&quot;</span>, <span class="st">&quot;V_Category_NeuPos_dev:Language_dev&quot;</span>, <span class="st">&quot;WORD_LENGTH&quot;</span>, <span class="st">&quot;Conc_Mean&quot;</span>,  <span class="st">&quot;Language_dev&quot;</span>, <span class="st">&quot;V_Category_NeuNeg_dev&quot;</span>, <span class="st">&quot;V_Category_NeuPos_dev&quot;</span>),</span>
+<span id="cb92-6"><a href="visualisation.html#cb92-6" tabindex="-1"></a>                   <span class="at">labels =</span> <span class="fu">c</span>(<span class="st">&quot;Condition2:Language&quot;</span>, <span class="st">&quot;Condition1:Language&quot;</span>, <span class="st">&quot;Word Length&quot;</span>, <span class="st">&quot;Concreteness&quot;</span>, <span class="st">&quot;Language&quot;</span>, <span class="st">&quot;Condition2&quot;</span>, <span class="st">&quot;Condition1&quot;</span>)) <span class="sc">+</span></span>
+<span id="cb92-7"><a href="visualisation.html#cb92-7" tabindex="-1"></a>  <span class="fu">xlab</span>(<span class="st">&quot;Fixed effect&quot;</span>) <span class="sc">+</span></span>
+<span id="cb92-8"><a href="visualisation.html#cb92-8" tabindex="-1"></a>  <span class="fu">coord_flip</span>() <span class="sc">+</span></span>
+<span id="cb92-9"><a href="visualisation.html#cb92-9" tabindex="-1"></a>  <span class="fu">theme_bw</span>()</span></code></pre></div>
+<p><img src="_main_files/figure-html/unnamed-chunk-78-1.png" width="672" /></p>
+</div>
+<div id="emmip-interaction-style-plots-for-estimated-marginal-means" class="section level2 hasAnchor" number="4.3">
+<h2><span class="header-section-number">4.3</span> emmip: Interaction-style plots for estimated marginal means<a href="visualisation.html#emmip-interaction-style-plots-for-estimated-marginal-means" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<div class="sourceCode" id="cb93"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb93-1"><a href="visualisation.html#cb93-1" tabindex="-1"></a>plot_dat <span class="ot">&lt;-</span> <span class="fu">emmip</span>(mod2, Language<span class="sc">~</span>V_Category, <span class="at">plotit =</span> <span class="cn">FALSE</span>)</span>
+<span id="cb93-2"><a href="visualisation.html#cb93-2" tabindex="-1"></a></span>
+<span id="cb93-3"><a href="visualisation.html#cb93-3" tabindex="-1"></a><span class="fu">ggplot</span>(plot_dat, <span class="fu">aes</span>(<span class="at">x =</span> xvar, <span class="at">y =</span> yvar, <span class="at">group =</span> tvar, <span class="at">linetype =</span> tvar, <span class="at">shape =</span> tvar)) <span class="sc">+</span></span>
+<span id="cb93-4"><a href="visualisation.html#cb93-4" tabindex="-1"></a>    <span class="fu">geom_point</span>(<span class="at">size =</span> <span class="dv">2</span>) <span class="sc">+</span></span>
+<span id="cb93-5"><a href="visualisation.html#cb93-5" tabindex="-1"></a>    <span class="fu">geom_line</span>() <span class="sc">+</span></span>
+<span id="cb93-6"><a href="visualisation.html#cb93-6" tabindex="-1"></a>    <span class="fu">labs</span>(<span class="at">x =</span> <span class="st">&quot;Valence Category&quot;</span>, <span class="at">y =</span> <span class="st">&quot;Single Fixation Duration (ms)&quot;</span>, <span class="at">linetype =</span> <span class="st">&quot;Language&quot;</span>, <span class="at">shape =</span> <span class="st">&quot;Language&quot;</span>) <span class="sc">+</span></span>
+<span id="cb93-7"><a href="visualisation.html#cb93-7" tabindex="-1"></a>    <span class="fu">theme_bw</span>()</span></code></pre></div>
+<p><img src="_main_files/figure-html/unnamed-chunk-79-1.png" width="672" /></p>
+</div>
+<div id="assumption-checking" class="section level2 hasAnchor" number="4.4">
+<h2><span class="header-section-number">4.4</span> Assumption Checking<a href="visualisation.html#assumption-checking" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<ol style="list-style-type: decimal">
+<li>Linearity</li>
+</ol>
+<div class="sourceCode" id="cb94"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb94-1"><a href="visualisation.html#cb94-1" tabindex="-1"></a><span class="fu">plot</span>(<span class="fu">fitted</span>(mod), <span class="fu">residuals</span>(mod))</span></code></pre></div>
+<p><img src="_main_files/figure-html/unnamed-chunk-80-1.png" width="672" /></p>
+<ol start="2" style="list-style-type: decimal">
+<li><p>Absence of collinearity</p></li>
+<li><p>Homoskedasticity
+Again, this can be checked with residual plots.</p></li>
+</ol>
+<div class="sourceCode" id="cb95"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb95-1"><a href="visualisation.html#cb95-1" tabindex="-1"></a><span class="fu">plot</span>(<span class="fu">fitted</span>(mod), <span class="fu">residuals</span>(mod))</span></code></pre></div>
+<p><img src="_main_files/figure-html/unnamed-chunk-81-1.png" width="672" /></p>
+<ol start="4" style="list-style-type: decimal">
+<li>Normality of residuals</li>
+</ol>
+<div class="sourceCode" id="cb96"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb96-1"><a href="visualisation.html#cb96-1" tabindex="-1"></a><span class="fu">hist</span>(<span class="fu">residuals</span>(mod))</span></code></pre></div>
+<p><img src="_main_files/figure-html/unnamed-chunk-82-1.png" width="672" /></p>
+<div class="sourceCode" id="cb97"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb97-1"><a href="visualisation.html#cb97-1" tabindex="-1"></a><span class="fu">qqnorm</span>(<span class="fu">residuals</span>(mod))</span></code></pre></div>
+<p><img src="_main_files/figure-html/unnamed-chunk-82-2.png" width="672" /></p>
+<ol start="5" style="list-style-type: decimal">
+<li><p>Absence of influential data points
+This assumption is met with visual investigation of violin boxplot.</p></li>
+<li><p>Independence
+This assumption is met with modeling (fixed effects: Valence cagetory, Language; random effects: Concreteness, Word Length).</p></li>
+</ol>
+
+</div>
+</div>
+            </section>
+
+          </div>
+        </div>
+      </div>
+<a href="statistical-analysis.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="references.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+    </div>
+  </div>
+<script src="libs/gitbook-2.6.7/js/app.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/clipboard.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-search.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-sharing.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-fontsettings.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-bookdown.js"></script>
+<script src="libs/gitbook-2.6.7/js/jquery.highlight.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-clipboard.js"></script>
+<script>
+gitbook.require(["gitbook"], function(gitbook) {
+gitbook.start({
+"sharing": {
+"github": false,
+"facebook": true,
+"twitter": true,
+"linkedin": false,
+"weibo": false,
+"instapaper": false,
+"vk": false,
+"whatsapp": false,
+"all": ["facebook", "twitter", "linkedin", "weibo", "instapaper"]
+},
+"fontsettings": {
+"theme": "white",
+"family": "sans",
+"size": 2
+},
+"edit": {
+"link": "https://github.com/USERNAME/REPO/edit/BRANCH/03-visualisation.Rmd",
+"text": "Edit"
+},
+"history": {
+"link": null,
+"text": null
+},
+"view": {
+"link": null,
+"text": null
+},
+"download": ["_main.pdf", "_main.epub"],
+"search": {
+"engine": "fuse",
+"options": null
+},
+"toc": {
+"collapse": null,
+"scroll_highlight": true
+}
+});
+});
+</script>
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    var src = "true";
+    if (src === "" || src === "true") src = "https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.9/latest.js?config=TeX-MML-AM_CHTML";
+    if (location.protocol !== "file:")
+      if (/^https?:/.test(src))
+        src = src.replace(/^https?:/, '');
+    script.src = src;
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+</body>
+
+</html>
