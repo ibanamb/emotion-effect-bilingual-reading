@@ -776,7 +776,7 @@ ReadingDataSummary <- data.frame(df_Sum_ReadingData$Language,
                           round(df_Sum_ReadingData$SD_KnownRatio,3))
 names(ReadingDataSummary) <- (c("Language", "Valence Category", "N", "Valence rating (Mean)", "Valence rating (SD)", "Word Length (Mean)", "Word Length (SD)", "Concreteness rating (Mean)", "Concreteness rating (SD)", "Word known ratio (Mean)", "Word known ratio (SD)"))
 
-kable(ReadingDataSummary) %>% kable_styling() %>% scroll_box(width = "100%", height = "200px")
+kable(ReadingDataSummary) %>% kable_styling() %>% scroll_box(width = "100%", height = "100%")
 ```
 
 Here I also summarised the number of items per participant per language.
@@ -787,7 +787,7 @@ Sum_ReadingData_ENandNL_itemsperparticipants <- ReadingData_w_WordList_NoRep %>%
   summarise(N = n()) %>%
   ungroup()
 
-kable(Sum_ReadingData_ENandNL_itemsperparticipants) %>% kable_styling()
+kable(Sum_ReadingData_ENandNL_itemsperparticipants) %>% kable_styling() %>% scroll_box(width = "100%", height = "500px")
 ```
 
 ## Mean centering

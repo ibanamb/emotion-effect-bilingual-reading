@@ -519,41 +519,42 @@ generated in the experiment.</p>
 <span id="cb23-14"><a href="set-up-and-data-preparation.html#cb23-14" tabindex="-1"></a>                          <span class="fu">round</span>(df_Sum_WordList<span class="sc">$</span>SD_KnownRatio,<span class="dv">3</span>))</span>
 <span id="cb23-15"><a href="set-up-and-data-preparation.html#cb23-15" tabindex="-1"></a><span class="fu">names</span>(wordsummary) <span class="ot">&lt;-</span> (<span class="fu">c</span>(<span class="st">&quot;Language&quot;</span>, <span class="st">&quot;Valence Category&quot;</span>, <span class="st">&quot;N&quot;</span>, <span class="st">&quot;Valence rating (Mean)&quot;</span>, <span class="st">&quot;Valence rating (SD)&quot;</span>, <span class="st">&quot;Word Length (Mean)&quot;</span>, <span class="st">&quot;Word Length (SD)&quot;</span>, <span class="st">&quot;Concreteness rating (Mean)&quot;</span>, <span class="st">&quot;Concreteness rating (SD)&quot;</span>, <span class="st">&quot;Word known ratio (Mean)&quot;</span>, <span class="st">&quot;Word known ratio (SD)&quot;</span>))</span>
 <span id="cb23-16"><a href="set-up-and-data-preparation.html#cb23-16" tabindex="-1"></a></span>
-<span id="cb23-17"><a href="set-up-and-data-preparation.html#cb23-17" tabindex="-1"></a><span class="fu">kable</span>(wordsummary) <span class="sc">%&gt;%</span> <span class="fu">kable_styling</span>()</span></code></pre></div>
+<span id="cb23-17"><a href="set-up-and-data-preparation.html#cb23-17" tabindex="-1"></a><span class="fu">kable</span>(wordsummary) <span class="sc">%&gt;%</span> <span class="fu">kable_styling</span>() <span class="sc">%&gt;%</span> <span class="fu">scroll_box</span>(<span class="at">width =</span> <span class="st">&quot;100%&quot;</span>, <span class="at">height =</span> <span class="st">&quot;200px&quot;</span>)</span></code></pre></div>
+<div style="border: 1px solid #ddd; padding: 0px; overflow-y: scroll; height:200px; overflow-x: scroll; width:100%; ">
 <table class="table" style="margin-left: auto; margin-right: auto;">
 <thead>
 <tr>
-<th style="text-align:left;">
+<th style="text-align:left;position: sticky; top:0; background-color: #FFFFFF;">
 Language
 </th>
-<th style="text-align:left;">
+<th style="text-align:left;position: sticky; top:0; background-color: #FFFFFF;">
 Valence Category
 </th>
-<th style="text-align:right;">
+<th style="text-align:right;position: sticky; top:0; background-color: #FFFFFF;">
 N
 </th>
-<th style="text-align:right;">
+<th style="text-align:right;position: sticky; top:0; background-color: #FFFFFF;">
 Valence rating (Mean)
 </th>
-<th style="text-align:right;">
+<th style="text-align:right;position: sticky; top:0; background-color: #FFFFFF;">
 Valence rating (SD)
 </th>
-<th style="text-align:right;">
+<th style="text-align:right;position: sticky; top:0; background-color: #FFFFFF;">
 Word Length (Mean)
 </th>
-<th style="text-align:right;">
+<th style="text-align:right;position: sticky; top:0; background-color: #FFFFFF;">
 Word Length (SD)
 </th>
-<th style="text-align:right;">
+<th style="text-align:right;position: sticky; top:0; background-color: #FFFFFF;">
 Concreteness rating (Mean)
 </th>
-<th style="text-align:right;">
+<th style="text-align:right;position: sticky; top:0; background-color: #FFFFFF;">
 Concreteness rating (SD)
 </th>
-<th style="text-align:right;">
+<th style="text-align:right;position: sticky; top:0; background-color: #FFFFFF;">
 Word known ratio (Mean)
 </th>
-<th style="text-align:right;">
+<th style="text-align:right;position: sticky; top:0; background-color: #FFFFFF;">
 Word known ratio (SD)
 </th>
 </tr>
@@ -771,6 +772,7 @@ Positive
 </tr>
 </tbody>
 </table>
+</div>
 </div>
 <div id="visualisation-of-target-word-lists" class="section level2 hasAnchor" number="2.9">
 <h2><span class="header-section-number">2.9</span> Visualisation of target word lists<a href="set-up-and-data-preparation.html#visualisation-of-target-word-lists" class="anchor-section" aria-label="Anchor link to header"></a></h2>
@@ -1125,41 +1127,42 @@ analysed in the current study.</p>
 <span id="cb48-28"><a href="set-up-and-data-preparation.html#cb48-28" tabindex="-1"></a>                          <span class="fu">round</span>(df_Sum_ReadingData<span class="sc">$</span>SD_KnownRatio,<span class="dv">3</span>))</span>
 <span id="cb48-29"><a href="set-up-and-data-preparation.html#cb48-29" tabindex="-1"></a><span class="fu">names</span>(ReadingDataSummary) <span class="ot">&lt;-</span> (<span class="fu">c</span>(<span class="st">&quot;Language&quot;</span>, <span class="st">&quot;Valence Category&quot;</span>, <span class="st">&quot;N&quot;</span>, <span class="st">&quot;Valence rating (Mean)&quot;</span>, <span class="st">&quot;Valence rating (SD)&quot;</span>, <span class="st">&quot;Word Length (Mean)&quot;</span>, <span class="st">&quot;Word Length (SD)&quot;</span>, <span class="st">&quot;Concreteness rating (Mean)&quot;</span>, <span class="st">&quot;Concreteness rating (SD)&quot;</span>, <span class="st">&quot;Word known ratio (Mean)&quot;</span>, <span class="st">&quot;Word known ratio (SD)&quot;</span>))</span>
 <span id="cb48-30"><a href="set-up-and-data-preparation.html#cb48-30" tabindex="-1"></a></span>
-<span id="cb48-31"><a href="set-up-and-data-preparation.html#cb48-31" tabindex="-1"></a><span class="fu">kable</span>(ReadingDataSummary) <span class="sc">%&gt;%</span> <span class="fu">kable_styling</span>()</span></code></pre></div>
+<span id="cb48-31"><a href="set-up-and-data-preparation.html#cb48-31" tabindex="-1"></a><span class="fu">kable</span>(ReadingDataSummary) <span class="sc">%&gt;%</span> <span class="fu">kable_styling</span>() <span class="sc">%&gt;%</span> <span class="fu">scroll_box</span>(<span class="at">width =</span> <span class="st">&quot;100%&quot;</span>, <span class="at">height =</span> <span class="st">&quot;100%&quot;</span>)</span></code></pre></div>
+<div style="border: 1px solid #ddd; padding: 0px; overflow-y: scroll; height:100%; overflow-x: scroll; width:100%; ">
 <table class="table" style="margin-left: auto; margin-right: auto;">
 <thead>
 <tr>
-<th style="text-align:left;">
+<th style="text-align:left;position: sticky; top:0; background-color: #FFFFFF;">
 Language
 </th>
-<th style="text-align:left;">
+<th style="text-align:left;position: sticky; top:0; background-color: #FFFFFF;">
 Valence Category
 </th>
-<th style="text-align:right;">
+<th style="text-align:right;position: sticky; top:0; background-color: #FFFFFF;">
 N
 </th>
-<th style="text-align:right;">
+<th style="text-align:right;position: sticky; top:0; background-color: #FFFFFF;">
 Valence rating (Mean)
 </th>
-<th style="text-align:right;">
+<th style="text-align:right;position: sticky; top:0; background-color: #FFFFFF;">
 Valence rating (SD)
 </th>
-<th style="text-align:right;">
+<th style="text-align:right;position: sticky; top:0; background-color: #FFFFFF;">
 Word Length (Mean)
 </th>
-<th style="text-align:right;">
+<th style="text-align:right;position: sticky; top:0; background-color: #FFFFFF;">
 Word Length (SD)
 </th>
-<th style="text-align:right;">
+<th style="text-align:right;position: sticky; top:0; background-color: #FFFFFF;">
 Concreteness rating (Mean)
 </th>
-<th style="text-align:right;">
+<th style="text-align:right;position: sticky; top:0; background-color: #FFFFFF;">
 Concreteness rating (SD)
 </th>
-<th style="text-align:right;">
+<th style="text-align:right;position: sticky; top:0; background-color: #FFFFFF;">
 Word known ratio (Mean)
 </th>
-<th style="text-align:right;">
+<th style="text-align:right;position: sticky; top:0; background-color: #FFFFFF;">
 Word known ratio (SD)
 </th>
 </tr>
@@ -1377,23 +1380,25 @@ Positive
 </tr>
 </tbody>
 </table>
+</div>
 <p>Here I also summarised the number of items per participant per language.</p>
 <div class="sourceCode" id="cb49"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb49-1"><a href="set-up-and-data-preparation.html#cb49-1" tabindex="-1"></a>Sum_ReadingData_ENandNL_itemsperparticipants <span class="ot">&lt;-</span> ReadingData_w_WordList_NoRep <span class="sc">%&gt;%</span></span>
 <span id="cb49-2"><a href="set-up-and-data-preparation.html#cb49-2" tabindex="-1"></a>  <span class="fu">group_by</span>(PP_NR, Language) <span class="sc">%&gt;%</span></span>
 <span id="cb49-3"><a href="set-up-and-data-preparation.html#cb49-3" tabindex="-1"></a>  <span class="fu">summarise</span>(<span class="at">N =</span> <span class="fu">n</span>()) <span class="sc">%&gt;%</span></span>
 <span id="cb49-4"><a href="set-up-and-data-preparation.html#cb49-4" tabindex="-1"></a>  <span class="fu">ungroup</span>()</span>
 <span id="cb49-5"><a href="set-up-and-data-preparation.html#cb49-5" tabindex="-1"></a></span>
-<span id="cb49-6"><a href="set-up-and-data-preparation.html#cb49-6" tabindex="-1"></a><span class="fu">kable</span>(Sum_ReadingData_ENandNL_itemsperparticipants) <span class="sc">%&gt;%</span> <span class="fu">kable_styling</span>()</span></code></pre></div>
+<span id="cb49-6"><a href="set-up-and-data-preparation.html#cb49-6" tabindex="-1"></a><span class="fu">kable</span>(Sum_ReadingData_ENandNL_itemsperparticipants) <span class="sc">%&gt;%</span> <span class="fu">kable_styling</span>() <span class="sc">%&gt;%</span> <span class="fu">scroll_box</span>(<span class="at">width =</span> <span class="st">&quot;100%&quot;</span>, <span class="at">height =</span> <span class="st">&quot;500px&quot;</span>)</span></code></pre></div>
+<div style="border: 1px solid #ddd; padding: 0px; overflow-y: scroll; height:500px; overflow-x: scroll; width:100%; ">
 <table class="table" style="margin-left: auto; margin-right: auto;">
 <thead>
 <tr>
-<th style="text-align:left;">
+<th style="text-align:left;position: sticky; top:0; background-color: #FFFFFF;">
 PP_NR
 </th>
-<th style="text-align:left;">
+<th style="text-align:left;position: sticky; top:0; background-color: #FFFFFF;">
 Language
 </th>
-<th style="text-align:right;">
+<th style="text-align:right;position: sticky; top:0; background-color: #FFFFFF;">
 N
 </th>
 </tr>
@@ -1797,6 +1802,7 @@ English
 </tr>
 </tbody>
 </table>
+</div>
 </div>
 <div id="mean-centering" class="section level2 hasAnchor" number="2.17">
 <h2><span class="header-section-number">2.17</span> Mean centering<a href="set-up-and-data-preparation.html#mean-centering" class="anchor-section" aria-label="Anchor link to header"></a></h2>

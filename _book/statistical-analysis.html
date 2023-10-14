@@ -354,29 +354,30 @@ div.csl-indent {
 <span id="cb57-12"><a href="statistical-analysis.html#cb57-12" tabindex="-1"></a><span class="fu">names</span>(modelsummary) <span class="ot">&lt;-</span> (<span class="fu">c</span>(<span class="st">&quot;Term&quot;</span>, <span class="st">&quot;Estimate&quot;</span>, <span class="st">&quot;Standard Error&quot;</span>, <span class="st">&quot;t-value&quot;</span>, <span class="st">&quot;p-value&quot;</span>, <span class="st">&quot;95% CI (Lower)&quot;</span>, <span class="st">&quot;95% CI (Higher)&quot;</span>))</span>
 <span id="cb57-13"><a href="statistical-analysis.html#cb57-13" tabindex="-1"></a>modelsummary<span class="sc">$</span><span class="st">`</span><span class="at">p-value</span><span class="st">`</span> <span class="ot">&lt;-</span> <span class="fu">ifelse</span>(modelsummary<span class="sc">$</span><span class="st">`</span><span class="at">p-value</span><span class="st">`</span> <span class="sc">&lt;</span><span class="fl">0.001</span>, <span class="st">&quot;&lt;0.001&quot;</span>, <span class="fu">round</span>(modelsummary<span class="sc">$</span><span class="st">`</span><span class="at">p-value</span><span class="st">`</span>, <span class="dv">3</span>))</span>
 <span id="cb57-14"><a href="statistical-analysis.html#cb57-14" tabindex="-1"></a></span>
-<span id="cb57-15"><a href="statistical-analysis.html#cb57-15" tabindex="-1"></a><span class="fu">kable</span>(modelsummary) <span class="sc">%&gt;%</span> <span class="fu">kable_styling</span>()</span></code></pre></div>
+<span id="cb57-15"><a href="statistical-analysis.html#cb57-15" tabindex="-1"></a><span class="fu">kable</span>(modelsummary) <span class="sc">%&gt;%</span> <span class="fu">kable_styling</span>() <span class="sc">%&gt;%</span> <span class="fu">scroll_box</span>(<span class="at">width =</span> <span class="st">&quot;100%&quot;</span>, <span class="at">height =</span> <span class="st">&quot;100%&quot;</span>)</span></code></pre></div>
+<div style="border: 1px solid #ddd; padding: 0px; overflow-y: scroll; height:100%; overflow-x: scroll; width:100%; ">
 <table class="table" style="margin-left: auto; margin-right: auto;">
 <thead>
 <tr>
-<th style="text-align:left;">
+<th style="text-align:left;position: sticky; top:0; background-color: #FFFFFF;">
 Term
 </th>
-<th style="text-align:right;">
+<th style="text-align:right;position: sticky; top:0; background-color: #FFFFFF;">
 Estimate
 </th>
-<th style="text-align:right;">
+<th style="text-align:right;position: sticky; top:0; background-color: #FFFFFF;">
 Standard Error
 </th>
-<th style="text-align:right;">
+<th style="text-align:right;position: sticky; top:0; background-color: #FFFFFF;">
 t-value
 </th>
-<th style="text-align:left;">
+<th style="text-align:left;position: sticky; top:0; background-color: #FFFFFF;">
 p-value
 </th>
-<th style="text-align:right;">
+<th style="text-align:right;position: sticky; top:0; background-color: #FFFFFF;">
 95% CI (Lower)
 </th>
-<th style="text-align:right;">
+<th style="text-align:right;position: sticky; top:0; background-color: #FFFFFF;">
 95% CI (Higher)
 </th>
 </tr>
@@ -568,6 +569,7 @@ V_Category_NeuNeg_dev:Language_dev
 </tr>
 </tbody>
 </table>
+</div>
 </div>
 <div id="run-model-comparison-for-the-main-effect-and-interactions" class="section level2 hasAnchor" number="3.3">
 <h2><span class="header-section-number">3.3</span> Run model comparison for the main effect and interactions<a href="statistical-analysis.html#run-model-comparison-for-the-main-effect-and-interactions" class="anchor-section" aria-label="Anchor link to header"></a></h2>

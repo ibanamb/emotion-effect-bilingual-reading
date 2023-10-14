@@ -158,7 +158,7 @@ modelsummary <- data.frame(df_modelsummary$term,
 names(modelsummary) <- (c("Term", "Estimate", "Standard Error", "t-value", "p-value", "95% CI (Lower)", "95% CI (Higher)"))
 modelsummary$`p-value` <- ifelse(modelsummary$`p-value` <0.001, "<0.001", round(modelsummary$`p-value`, 3))
 
-kable(modelsummary) %>% kable_styling()
+kable(modelsummary) %>% kable_styling() %>% scroll_box(width = "100%", height = "100%")
 ```
 
 ## Run model comparison for the main effect and interactions
