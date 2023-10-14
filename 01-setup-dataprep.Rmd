@@ -20,7 +20,7 @@ library("optimx") #optimx package for modelling
 
 ## Prepare GECO Material
 
-GECO Materials are downloaded from [@cop2016]
+GECO Materials are downloaded from [@cop2017]
 <https://expsy.ugent.be/downloads/geco/>
 
 ```{r}
@@ -56,7 +56,7 @@ datasets use different rating metrics, I transformed valence ratings
 close to 1 is positive.
 
 **English**\
-Original rating by [@warriner2013] is 1(happy) - 9(unhappy). The valence
+Original rating by @warriner2013 is 1(happy) - 9(unhappy). The valence
 rating are already reversed post-hoc to maintain more intuitive
 low-to-high scale 1(unhappy) - 9(happy) (5 = neutral). Thus no need to
 reverse again.
@@ -78,7 +78,7 @@ EnglishValence <- EnglishValence %>%
 ```
 
 **Dutch**\
-Original rating by [@moors2012] is 1(unhappy) - 7(happy) (4 = neutral).
+Original rating by @moors2013 is 1(unhappy) - 7(happy) (4 = neutral).
 
 ```{r warning = FALSE, message=FALSE}
 DutchValence <- read_excel("WordNorms Moors et al.xlsx", skip = 1)
@@ -101,8 +101,8 @@ analysis.
 
 ## Prepare concreteness rating
 
-Two published concreteness ratings [@brysbaert2014 for Dutch;
-@brysbaert2013 for English] are used to include in a model as a control
+Two published concreteness ratings [@brysbaert2014a for Dutch;
+@brysbaert2014b for English] are used to include in a model as a control
 variable.
 
 **English**
@@ -194,8 +194,8 @@ DutchConcreteness <- bind_rows(DutchConcreteness_F, DutchConcreteness_dup2) %>%
 ## Prepare list of Identical cognates
 
 We decided to exclude identical cognates as research shows that cognates
-are recognised and processed faster [i.e., cognates effect;
-@dijkstra2010a]. Data is retrieved from @poort2019
+are recognised and processed faster (i.e., cognates effect;
+@dijkstra2010a). Data is retrieved from @poort2019
 (<https://osf.io/tcdxb/>).
 
 ```{r}
@@ -437,7 +437,7 @@ ggplot(DutchWordList_noDup, aes(V_Mean_Percent)) +
 
 First of all, I loaded the dataset and selected only necessary
 information. One participant(pp18) was removed from the dataset because
-they only read first half of the book in English [@cop2016].
+they only read first half of the book in English [@cop2017].
 
 ```{r}
 #Load the dataset
@@ -488,18 +488,27 @@ kable(Demographic_table) %>% kable_styling()
 
 ## Data wrangling on ReadingData
 
-Here I uploaded the ReadingData from GECO project [@cop2016], retrieved
-from <https://expsy.ugent.be/downloads/geco/>. For the analyses, I
-selected PP_NR, PART, WORD, WORD_FIXATION_COUNT,
-WORD_FIRST_FIXATION_DURATION. Single Fixation Duration (SFD) is our
-dependent variables which are the Words that has WORD_FIXATION_COUNT =
-1.
+Here I uploaded the ReadingData from GECO project [@cop2017], retrieved
+from <https://expsy.ugent.be/downloads/geco/>. 
+
+```{r eval=FALSE}
+EnglishReadingData_raw <- read_excel("L2ReadingData.xlsx")
+DutchReadingData_raw <- read_excel("L1ReadingData.xlsx")
+```
+
+```{r echo=FALSE}
+load("raw_reading_data_en.RData")
+load("raw_reading_data_nl.RData")
+```
 
 **English**
 
-```{r}
-EnglishReadingData_raw <- read_excel("L2ReadingData.xlsx")
+I first worked on EnglishReadingData. For the analyses, I selected 
+PP_NR, PART, WORD, WORD_FIXATION_COUNT, WORD_FIRST_FIXATION_DURATION. 
+Single Fixation Duration (SFD) is our dependent variables which are 
+the Words that has WORD_FIXATION_COUNT = 1.
 
+```{r}
 EnglishReadingData <- EnglishReadingData_raw %>% 
   select(PP_NR, PART, WORD_ID, WORD, WORD_FIXATION_COUNT, WORD_FIRST_FIXATION_DURATION) %>%
   filter(WORD_FIXATION_COUNT == "1",
@@ -524,8 +533,6 @@ EnglishReadingData_Final <- EnglishReadingData_Final %>%
 Same cleaning process as English is required for Dutch reading data.
 
 ```{r}
-DutchReadingData_raw <- read_excel("L1ReadingData.xlsx")
-
 DutchReadingData <- DutchReadingData_raw %>%
   select(PP_NR, PART, WORD_ID, WORD, WORD_FIXATION_COUNT, WORD_FIRST_FIXATION_DURATION) %>%
   filter(WORD_FIXATION_COUNT == "1")
